@@ -1,6 +1,6 @@
 class State:
-    def __init__(self, problem, remaining=None, visited=[0]):
-        self.visited = visited
+    def __init__(self, problem, remaining=None, path=[0]):
+        self.path = path
         self.problem = problem
         
         if remaining is None:

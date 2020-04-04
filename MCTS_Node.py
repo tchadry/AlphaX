@@ -14,13 +14,14 @@ class MCTS_Node:
         self.problem = problem
 
     def expand(self):
+        # expand on current node with a random possible action
         remaining = self.state.remaining[:]
-        visited = self.state.visited[:]
+        path = self.state.path[:]
         next_action = random.choice(remaining)
-        visited.append(next_action)
+        path.append(next_action)
         remaining.remove(next_action)
 
-        new_state = state.State(self.problem, remaining, visited)
+        new_state = state.State(self.problem, remaining, path)
         expanded_child = MCTS_Node(self, new_state, self.problem, next_action)
 
         self.children.append(expanded_child)
@@ -29,6 +30,7 @@ class MCTS_Node:
 
 
     def perform_action(self, action):
+        # get child with action, if action was never performed, expand node
         for child in self.children:
             if child.action == action:
                 return child
@@ -36,8 +38,29 @@ class MCTS_Node:
         return child
             
     def backpropagate(self, reward):
+        # add the reward and go up on the tree
         self.visit_count += 1
         self.score += reward
         self.avg_score = self.score / self.visit_count
         if self.parent:
             self.parent.backprop(reward)
+
+    def simulate(self):
+        # TODO: instead o naively generating the path, actually do a loop creating every state until it is terminal
+        # otherwise it won't solve problems where the graphs are not fully connected
+        random.shuffle(self.state.remaining)
+        simulated_expansion = self.state.path + self.state.remaining + [0]
+        return self.problem.payoff(simulated_expansion)
+
+    def has_children(self):
+        return len(self.children) != 0
+
+    def is_leaf(self):
+        return len(self.state.path) == self.problem.n
+    
+    def is_fully_expanded(self):
+        return len(self.state.remaining) == len(self.children)
+
+    def get_complete_path(self):
+        return self.state.path + [self.state.path[0]]
+
