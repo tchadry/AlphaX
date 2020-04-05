@@ -8,7 +8,7 @@ from GNNMCTS_Solver import GNN_MCTS_Solver
 from GNNTrainer import GNN_Trainer
 import torch
 from torch import nn
-from tsp import TSP
+from TSP import TSP
 import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
