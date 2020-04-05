@@ -31,7 +31,7 @@ class GNN_Policy(nn.Module):
         choice = torch.masked_select(c.squeeze(), choices)
         choice = F.softmax(choice, dim=0)
 
-        v = global_mean_pool(x, torch.zeros(data.num_nodes, dtype=data.long))
+        v = global_mean_pool(x, torch.zeros(data.num_nodes, dtype=torch.long))
         value = self.activ(v)
 
         return choice, value
