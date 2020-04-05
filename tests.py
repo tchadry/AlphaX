@@ -36,8 +36,11 @@ print(trainer.losses)
 plt.scatter(x=np.arange(len(trainer.losses)), y=trainer.losses, marker='.')
 plt.show()
 
+print("start testing")
 # test choices of policy network
 for _ in range(5):
     tsp = TSP(20, 2)
     solver = GNNSolver(tsp, policy_network)
     print(solver.solve())
+
+print("DONE!")
