@@ -18,8 +18,8 @@ class GNN_Policy(nn.Module):
     def forward(self, data):
         print("analyzing data")
         print(data)
-        print(data.shape)
-        x, edges, choices = data.x, data.edge_index, data.y
+
+        x, edges, choices = data.pos, data.edge_index, data.y
 
         x = self.conv1(x, edges)
         x = F.relu(x)
