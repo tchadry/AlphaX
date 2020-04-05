@@ -13,7 +13,7 @@ class GNN_Policy(nn.Module):
         self.conv1 = GCNConv(d,  16)
         self.conv2 = GCNConv(16,  16)
         self.conv3 = GCNConv(16, 1)
-        self.activ    = nn.Linear(16, 1)
+        self.activ = nn.Linear(16, 1)
     
     def forward(self, data):
         x, edges, choices = data.x, data.edge_index, data.y
