@@ -1,6 +1,5 @@
 from Policy_GNN import GNN_Policy
 from MCTS_Node import MCTS_Node 
-from MCTSexample import MCTSExample
 from MCTSGNNexample import MCTSGNNexample
 from GNN_Solver import GNNSolver
 from GNNMCTS_Solver import GNN_MCTS_Solver
@@ -33,7 +32,7 @@ class MCTS_Solver:
             node = self.mcts_search(node)
         end = node.is_leaf()
 
-    #from the end, we get the path and payoff until there 
+        #from the end, we get the path and payoff until there 
         path = node.get_complete_graph()
         payoff = self.problem.tour_length(path)
 

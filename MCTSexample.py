@@ -1,8 +1,22 @@
+from Policy_GNN import GNN_Policy
+from MCTS_Node import MCTS_Node
+from MCTS_solver import MCTS_Solver
+from MCTSGNNexample import MCTSGNNexample
+from GNN_Solver import GNNSolver
+from GNNMCTS_Solver import GNN_MCTS_Solver
+from GNNTrainer import GNN_Trainer
+import torch
+from torch import nn
+from tsp import TSP
+import matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
+
 class MCTSExample:
     
     def __init__(self, problem, example_queue, iterations=1000):
         self.problem = problem
-        self.root = MCTSNode(problem=self.problem)
+        self.root = MCTS_Node(problem=self.problem)
         self.example_queue = example_queue
         self.iterations = iterations
     
@@ -15,7 +29,7 @@ class MCTSExample:
             end=node.is_leaf()
             
         path = node.get_tour()
-        payoff = self.problem.tour_length(mcts_tour)
+        payoff = self.problem.tour_length(path)
         return path, payoff
 
     def mcts_search(self, root):
