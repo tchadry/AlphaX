@@ -16,6 +16,7 @@ class GNN_Trainer:
     def train_example(self):
         self.model.train()
         loss_fn = nn.MSELoss()
+        optimizer = torch.optim.Adam(params=policy_network.parameters(), lr=3e-4)
 
         example = self.example_queue.get()
         graph, choice_probs, value = example["graph"], example["choice_probs"], example["pred_value"]
@@ -32,6 +33,7 @@ class GNN_Trainer:
     def train_all(self):
         self.model.train()
         loss_fn = nn.MSELoss()
+        optimizer = torch.optim.Adam(params=policy_network.parameters(), lr=3e-4)
         while len(self.example_queue)!=0:
 
             example = self.example_queue.pop(0)
