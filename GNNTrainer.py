@@ -30,7 +30,7 @@ class GNN_Trainer:
         
     def train_all(self):
         self.model.train()
-        while not self.example_queue.empty():
+        while not len(self.example_queue):
 
             example = self.example_queue.get()
             graph, choice_probs, value = example["graph"], example["choice_probs"], example["pred_value"]

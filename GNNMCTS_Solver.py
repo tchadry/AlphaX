@@ -15,7 +15,7 @@ class GNN_MCTS_Solver:
             node = self.mcts_search(node)
             end=node.is_leaf()
             
-        path = node.get_tour()
+        path = node.get_path()
         payoff = self.problem.tour_length(path)
         return path, payoff
 
@@ -23,7 +23,7 @@ class GNN_MCTS_Solver:
         for _ in range(self.iterations):
             node = self.tree_policy(root)
             pay = node.simulate()
-            node.backprop(pay)
+            node.backpropagate(pay)
         return start_node.best_child_score()
 
     def tree_policy(self, root):

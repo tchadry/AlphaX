@@ -28,7 +28,7 @@ class MCTS_Solver:
         #while not at the end 
         while not end:
         #do the MCTS search on the node 
-        #MCTS search: the selection, expansion, simulation and backprop
+        #MCTS search: the selection, expansion, simulation and backpropagate
             node = self.mcts_search(node)
         end = node.is_leaf()
 
@@ -45,7 +45,7 @@ class MCTS_Solver:
         #tree policy does selection and expansion 
             node = self.tree_policy(root)
             pay = node.simulate()
-            node.backprop(pay)
+            node.backpropagate(pay)
         return root.select_child_score()
 
     def tree_policy(self, root):

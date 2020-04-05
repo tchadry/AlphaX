@@ -56,7 +56,7 @@ class MCTS_Node:
         self.score += reward
         self.avg_score = self.score / self.visit_count
         if self.parent:
-            self.parent.backprop(reward)
+            self.parent.backpropagate(reward)
 
     def simulate(self):
         # TODO: instead o naively generating the path, actually do a loop creating every state until it is terminal
@@ -74,14 +74,14 @@ class MCTS_Node:
     def is_fully_expanded(self):
         return len(self.remaining) == len(self.children)
 
-    def get_complete_path(self):
+    def get_path(self):
         return self.path + [self.path[0]]
 
     def UCT(self):
         epsilon = 0.5
         return self.avg_score + 2 * epsilon * np.sqrt(2 * np.log(self.parent.visit_count)/self.visit_count)
 
-    def select_child(self):
+    def best_child_uct(self):
         return max(self.children, key=lambda child: child.UCT())
 
     def create_graph(self):

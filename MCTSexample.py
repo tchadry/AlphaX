@@ -28,7 +28,7 @@ class MCTSExample:
             self.generate_example(node.parent)
             end=node.is_leaf()
             
-        path = node.get_tour()
+        path = node.get_path()
         payoff = self.problem.tour_length(path)
         return path, payoff
 
@@ -36,7 +36,7 @@ class MCTSExample:
         for _ in range(self.iterations):
             node = self.tree_policy(root)
             pay = node.simulate()
-            node.backprop(pay)
+            node.backpropagate(pay)
         return root.best_child_score()
 
     def tree_policy(self, root):
@@ -53,11 +53,11 @@ class MCTSExample:
     def generate_example(self, node):
         
         # construct graph
-        graph = node.construct_graph()
+        graph = node.create_graph()
         
         # construct labels
         
-        choice_probs = [(child.tour[-1], child.visits) for child in node.children]
+        choice_probs = [(child.path[-1], child.visit_count) for child in node.children]
         choice_probs = sorted(choice_probs, key = lambda c: c[1])
         choice_probs = [c[0] for c in choice_probs]
         choice_probs = torch.tensor(choice_probs).to(dtype=torch.float)
@@ -77,4 +77,4 @@ class MCTSExample:
             "choice": choice,
             "pred_value": pred_value,
         }
-        self.example_queue.put(example)
+        self.example_queue.append(example)
