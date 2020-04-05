@@ -1,7 +1,5 @@
 from Policy_GNN import GNN_Policy
 from MCTS_Node import MCTS_Node
-from MCTS_solver import MCTS_Solver
-from MCTSGNNexample import MCTSGNNexample
 from GNNMCTS_Solver import GNN_MCTS_Solver
 from GNNTrainer import GNN_Trainer
 import torch
