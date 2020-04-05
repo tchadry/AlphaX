@@ -1,6 +1,7 @@
 import random
 import state
 import numpy as np
+import torch
 
 class MCTS_Node:
     def __init__(self, parent, state, problem, action):
@@ -72,4 +73,5 @@ class MCTS_Node:
     def select_child(self):
         return max(self.children, key=lambda child: child.UCT())
 
-
+    def predict_next_child(self, model):
+        pass
