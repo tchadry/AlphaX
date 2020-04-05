@@ -129,7 +129,7 @@ class MCTS_Node:
     
     def best_remaining_policy(self, model):
         if len(self.remaining) == 1:
-            return self.add_child(self.remaining[0])
+            return self.perform_action(self.remaining[0])
         
         model.eval()
         
@@ -143,7 +143,7 @@ class MCTS_Node:
     
     def select_remaining_policy(self, model):
         if len(self.remaining) == 1:
-            return self.add_child(self.remaining[0])
+            return self.perform_action(self.remaining[0])
         
         model.eval()
         
