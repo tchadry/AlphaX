@@ -15,6 +15,7 @@ class GNN_Trainer:
 
     def train_example(self):
         self.model.train()
+        loss_fn = nn.MSELoss()
 
         example = self.example_queue.get()
         graph, choice_probs, value = example["graph"], example["choice_probs"], example["pred_value"]
@@ -30,11 +31,14 @@ class GNN_Trainer:
 
     def train_all(self):
         self.model.train()
+        loss_fn = nn.MSELoss()
         while len(self.example_queue)!=0:
 
             example = self.example_queue.pop(0)
             graph, choice_probs, value = example["graph"], example["choice_probs"], example["pred_value"]
 
+            #we are passing the policy GNN as the model
+            #but then we are calling the mode with the graph as input
             pred_choices, pred_value = self.model(graph)
             loss = loss_fn(pred_choices, choice_probs) + (0.2 * loss_fn(pred_value, value))
 
