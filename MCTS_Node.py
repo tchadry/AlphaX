@@ -5,9 +5,8 @@ import torch_geometric
 from torch_geometric.data import Data, DataLoader
 
 class MCTS_Node:
-    def __init__(self, parent, state, problem, action, path=[0], remaining=None):
+    def __init__(self, problem=None, parent=None, action=None, path=[0], remaining=None):
         self.parent = parent
-        self.state = state
         self.children = []
         self.graph = None
         self.action = action
@@ -24,14 +23,19 @@ class MCTS_Node:
 
     def expand(self):
         # expand on current node with a random possible action
-        remaining = self.state.remaining[:]
+        remaining = self.remaining[:]
         path = self.path[:]
         next_action = random.choice(remaining)
         path.append(next_action)
         remaining.remove(next_action)
 
-        new_state = state.State(self.problem, remaining, path)
-        expanded_child = MCTS_Node(self, new_state, self.problem, next_action)
+        expanded_child = MCTS_Node(
+            parent=self,
+            problem=self.problem,
+            action=next_action, 
+            path=path, 
+            remaining=remaining
+        )
 
         self.children.append(expanded_child)
 
@@ -57,8 +61,8 @@ class MCTS_Node:
     def simulate(self):
         # TODO: instead o naively generating the path, actually do a loop creating every state until it is terminal
         # otherwise it won't solve problems where the graphs are not fully connected
-        random.shuffle(self.state.remaining)
-        simulated_expansion = self.path + self.state.remaining + [0]
+        random.shuffle(self.remaining)
+        simulated_expansion = self.path + self.remaining + [0]
         return self.problem.payoff(simulated_expansion)
 
     def has_children(self):
@@ -68,7 +72,7 @@ class MCTS_Node:
         return len(self.path) == self.problem.n
     
     def is_fully_expanded(self):
-        return len(self.state.remaining) == len(self.children)
+        return len(self.remaining) == len(self.children)
 
     def get_complete_path(self):
         return self.path + [self.path[0]]
@@ -87,7 +91,7 @@ class MCTS_Node:
         nodes = torch.tensor(self.problem.points).to(dtype=torch.float)
         edges = torch.zeros((2, len(self.path)-1), dtype=torch.long)
 
-        for i in range(len(self.state.path)-1):
+        for i in range(len(self.path)-1):
             edges[0, i] = self.path[i]
             edges[1, i] = self.path[i+1]
 
