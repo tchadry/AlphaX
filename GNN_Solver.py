@@ -26,6 +26,6 @@ class GNNSolver:
             node = node.best_remaining_policy(model=self.model)
             end = node.is_leaf()
 
-        path = node.get_complete_path()
+        path = node.get_path()
         payoff = self.problem.tour_length(path)
         return path, payoff
