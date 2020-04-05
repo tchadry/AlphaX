@@ -1,4 +1,4 @@
-class MCTSExampleGenerator:
+class MCTSExample:
     
     def __init__(self, problem, example_queue, iterations=1000):
         self.problem = problem
