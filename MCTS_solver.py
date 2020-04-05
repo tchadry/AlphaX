@@ -1,4 +1,4 @@
-MCTSSolver:
+class MCTS_Solver:
     
 	#to initialize the solver, we will test different number of iterations; and game also has to be given
     def _init_(self, problem, iterations=1000):
