@@ -1,4 +1,4 @@
-class MCTSPolicyExampleGenerator:
+class MCTSGNNexample:
     
     def __init__(self, problem, example_queue, model, iterations=500):
         self.problem = problem
