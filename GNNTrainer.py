@@ -33,7 +33,7 @@ class GNN_Trainer:
     def train_all(self):
         self.model.train()
         loss_fn = nn.MSELoss()
-        optimizer = torch.optim.Adam(params=policy_network.parameters(), lr=3e-4)
+        optimizer = torch.optim.Adam(params=self.model.parameters(), lr=3e-4)
         while len(self.example_queue)!=0:
 
             example = self.example_queue.pop(0)
