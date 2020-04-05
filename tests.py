@@ -26,7 +26,7 @@ for _ in range(25):
     tsp = TSP(20, 2)
     solver = MCTSExample(tsp, training)
     solver.solve()
-
+print(training)
 # train
 trainer = GNN_Trainer(policy_network, training)
 trainer.train_all()
