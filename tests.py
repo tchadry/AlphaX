@@ -35,3 +35,9 @@ print(trainer.losses)
 # plot loss
 plt.scatter(x=np.arange(len(trainer.losses)), y=trainer.losses, marker='.')
 plt.show()
+
+# test choices of policy network
+for _ in range(5):
+    tsp = TSP(20, 2)
+    solver = PolicySolver(tsp, policy_network)
+    print(solver.solve())
