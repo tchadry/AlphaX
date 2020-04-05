@@ -1,44 +1,52 @@
-hello
-
 MCTSSolver:
     
-#given the game, and number of iterations 
-    def _init_(self, tsp, iterations=1000):
-        self.tsp = tsp
-        self.root_node = MCTSNode(tsp=self.tsp)
+	#to initialize the solver, we will test different number of iterations; and game also has to be given
+    def _init_(self, problem, iterations=1000):
+        self.problem = problem
+        self.root = MCTS_Node(problem=self.problem)
         self.iterations = iterations
 
-#to solve, 
+	#to solve, we are going to simulate  MCTS, and return the path and payoff
     def solve(self):
 	# we start at the node 
-        node = self.root_node
+        node = self.root
 
+	end = node.is_leaf() 
 	#while not at the end 
-        while not node.is_leaf():
+        while not end:
 		#do the MCTS search on the node 
 		#MCTS search: the selection, expansion, simulation and backprop
             node = self.mcts_search(node)
+	    end = node.is_leaf() 
 
-	#from the node, we get the tour 
-        mcts_tour = node.get_tour()
-        mcts_payoff = self.tsp.tour_length(mcts_tour)
+	#from the end, we get the path and payoff until there 
+        path = node.get_complete_graph()
+        payoff = self.problem.tour_length(path)
 
 	
-        return mcts_tour, mcts_payoff
+        return path, payoff
 	
 	#search: 
-    def mcts_search(self, start_node):
+    def mcts_search(self, root):
         for _ in range(self.iterations):
-            node = self.tree_policy(start_node)
+	    #tree policy does selection and expansion 
+            node = self.tree_policy(root)
             pay = node.simulate()
             node.backprop(pay)
-        return start_node.best_child_score()
+        return start_node.select_child_score()
 
-    def tree_policy(self, start_node):
-        node = start_node
-        while not node.is_leaf():
+    def tree_policy(self, root):
+        node = root
+	end = node.is_leaf()
+	
+	#iterate until we get to leaf node 
+        while not end:
+	    #if this node hasnt been expanded fully, we do expansion phase of MCTS 
             if not node.is_fully_expanded():
                 return node.expand()
             else:
+		#if it has been, we select the best child 
                 node = node.select_child()
+		end=node.is_leaf()
+		
         return node
