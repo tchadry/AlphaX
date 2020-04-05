@@ -103,3 +103,6 @@ class MCTS_Node:
         self.graph = Data(x=x, pos=nodes, edge_index=edges, y=choices)
         
         return self.graph
+
+    def best_child_score(self):
+        return max(self.children, key = lambda child: child.avg_score)
