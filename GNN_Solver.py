@@ -3,7 +3,6 @@ from MCTS_Node import MCTS_Node
 from MCTSexample import MCTSExample
 from MCTS_solver import MCTS_Solver
 from MCTSGNNexample import MCTSGNNexample
-from GNN_Solver import GNNSolver
 from GNNMCTS_Solver import GNN_MCTS_Solver
 from GNNTrainer import GNN_Trainer
 import torch
