@@ -106,3 +106,52 @@ class MCTS_Node:
 
     def best_child_score(self):
         return max(self.children, key = lambda child: child.avg_score)
+    
+    # TODO: Update these methods
+    def select_child_policy(self, model):
+        if len(self.children) == 1: 
+            return self.children[0]
+        
+        model.eval()
+
+        actions = [child.action for child in self.children]
+        r = list(set.intersection(set(actions), set(self.remaining)))
+        z = np.zeros(self.problem.n, dtype=np.int)
+        z[r] = 1
+        z = z[self.remaining]
+        
+        graph = self.create_graph()
+        pred, value = model(graph)
+         
+        pred = pred.squeeze()[z]
+        selection = torch.multinomial(pred, 1)
+        return self.children[selection]
+    
+    def best_remaining_policy(self, model):
+        if len(self.remaining) == 1:
+            return self.add_child(self.remaining[0])
+        
+        model.eval()
+        
+        graph = self.create_graph()
+        pred, value = model(graph)
+        
+        selection = torch.argmax(pred.squeeze()).item()
+        selection = self.remaining[selection]
+        
+        return self.perform_action(selection)
+    
+    def select_remaining_policy(self, model):
+        if len(self.remaining) == 1:
+            return self.add_child(self.remaining[0])
+        
+        model.eval()
+        
+        graph = self.create_graph()
+        pred, value = model(graph)
+        
+        selection = torch.argmax(pred.squeeze()).item()
+        selection = self.remaining[selection]
+        
+        selection = torch.multinomial(pred.squeeze(), 1)
+        return self.perform_action(selection)
