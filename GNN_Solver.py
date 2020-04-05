@@ -1,6 +1,5 @@
 from Policy_GNN import GNN_Policy
 from MCTS_Node import MCTS_Node
-from MCTSexample import MCTSExample
 from MCTS_solver import MCTS_Solver
 from MCTSGNNexample import MCTSGNNexample
 from GNNMCTS_Solver import GNN_MCTS_Solver
