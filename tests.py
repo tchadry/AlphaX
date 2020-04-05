@@ -22,6 +22,7 @@ loss_fn = nn.MSELoss()
 
 # generate examples
 for _ in range(25):
+    print("iterating")
     tsp = TSP(20, 2)
     solver = MCTSExample(tsp, training)
     solver.solve()
@@ -30,7 +31,7 @@ for _ in range(25):
 trainer = GNN_Trainer(policy_network, training)
 trainer.train_all()
 policy_network = trainer.model
-
+print(trainer.losses)
 # plot loss
 plt.scatter(x=np.arange(len(trainer.losses)), y=trainer.losses, marker='.')
 plt.show()
