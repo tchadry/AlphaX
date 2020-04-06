@@ -96,7 +96,7 @@ class MCTS_Node:
             edges[0, i] = self.path[i]
             edges[1, i] = self.path[i+1]
 
-        choices = torch.zeros(self.problem.n, dtype=torch.uint8)
+        choices = torch.zeros(self.problem.n, dtype=torch.bool)
         choices[self.remaining] = 1
         
         x = torch.cat([nodes, choices.unsqueeze(-1).to(dtype=torch.float)], dim=-1)
