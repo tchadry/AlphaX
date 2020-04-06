@@ -23,9 +23,9 @@ test_iterations = 100
 errors = []
 
 #iterations = list(range(25))
-iterations = [1, 5, 10, 15, 20, 25]#, 30, 35, 45, 50]
+iterations = [100, 200, 300, 400, 600, 800, 1000, 1250, 1500]#, 30, 35, 45, 50]
 
-for solve_iterations in iterations:
+for iters in iterations:
 
     training = []
 
@@ -37,7 +37,7 @@ for solve_iterations in iterations:
     for i in range(solve_iterations):
         print(f"Iterating {i}/{solve_iterations}")
         tsp = TSP(nodes, 2)
-        solver = MCTSExample(tsp, training)
+        solver = MCTSExample(tsp, training, iterations=iters)
         solver.solve()
     #print(training)
     # train
