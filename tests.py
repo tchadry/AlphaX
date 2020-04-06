@@ -23,7 +23,7 @@ loss_fn = nn.MSELoss()
 # generate examples
 for _ in range(25):
     print("iterating")
-    tsp = TSP(20, 2)
+    tsp = TSP(10, 2)
     solver = MCTSExample(tsp, training)
     solver.solve()
 print(training)
@@ -38,9 +38,11 @@ plt.show()
 
 print("start testing")
 # test choices of policy network
+results = []
 for _ in range(5):
-    tsp = TSP(20, 2)
+    tsp = TSP(10, 2)
     solver = GNNSolver(tsp, policy_network)
-    print(solver.solve())
+    results.append(solver.solve())
 
+print(results)
 print("DONE!")

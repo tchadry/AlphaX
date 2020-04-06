@@ -18,6 +18,7 @@ class MCTS_Node:
 
         if remaining is None:
             self.remaining = [i for i in range(self.problem.n)]
+            self.remaining.remove(0)
         else:
             self.remaining = remaining
 
