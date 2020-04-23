@@ -23,7 +23,7 @@ test_iterations = 100
 errors = []
 
 #iterations = list(range(25))
-iterations = [100, 200, 300, 400, 600, 800, 1000, 1250, 1500]#, 30, 35, 45, 50]
+iterations = [500, 1000, 1500, 2000,2500,3000,3500,4000,4500,6000] #, 30, 35, 45, 50]
 
 for iters in iterations:
 
@@ -64,7 +64,8 @@ for iters in iterations:
         results.append(result)
 
         optimal_length = tsp.get_optimal_length()
-        error += (result[1] - optimal_length) / optimal_length
+        if (result[1]/optimal_length) <1.5: 
+            error += 1
 
     error /= test_iterations
     errors.append(error)
